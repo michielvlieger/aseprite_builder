@@ -94,7 +94,7 @@ jobs:
         run: |
           curl -o depot_tools.zip -L https://storage.googleapis.com/chrome-infra/depot_tools.zip
           unzip depot_tools.zip -d depot_tools
-          set PATH=depot_tools;%PATH%
+          set PATH=%PATH%;depot_tools
           cd depot_tools
           gclient sync
           cd ../
