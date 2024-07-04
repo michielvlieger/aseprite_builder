@@ -44,7 +44,7 @@ jobs:
         run: echo "::set-output name=should_build::true"
       - name: Create Release
         id: create_release
-        if: "true"
+        if: "steps.should_build.outputs.should_build"
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
   build-aseprite:
     name: Build Aseprite
     needs: check-version
-    if: ${{ needs.check-version.outputs.should_build }}
+    if: "true"
     runs-on: ${{ matrix.os }}
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
