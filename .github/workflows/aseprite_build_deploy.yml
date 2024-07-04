@@ -100,7 +100,7 @@ jobs:
           C:
           cd ../../../../../../../../
           dir
-          cd "Program Files (#86)"
+          cd "Program Files (x86)"
           dir
           cd "Microsoft Visual Studio"
       - name: (Windows) Set architecture for the produced binary
