@@ -103,6 +103,13 @@ jobs:
           cd "Program Files (x86)"
           dir
           cd "Microsoft Visual Studio"
+          dir
+          cd 2019
+          dir
+          cd Enterprise
+          cd Common7
+          cd Tools
+          dir
       - name: (Windows) Set architecture for the produced binary
         if: matrix.os == 'windows-latest'
         shell: cmd
