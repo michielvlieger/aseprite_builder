@@ -97,6 +97,7 @@ jobs:
         uses: microsoft/setup-msbuild@v2
       - name: check mvs install location
         run: |
+          C:
           cd ../../../../../../../../
           dir
           cd "Program Files (#86)"
