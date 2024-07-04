@@ -93,6 +93,22 @@ jobs:
           curl -o Aseprite-source.zip -L ${{ needs.check-version.outputs.download_url }}
           unzip Aseprite-source.zip -d aseprite
           mkdir -p aseprite/build
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+      - name: check mvs install location
+        run: |
+          cd ../../../../../../../../
+          dir
+          cd "Program Files (#86)"
+          dir
+          cd "Microsoft Visual Studio"
+      - name: (Windows) Set architecture for the produced binary
+        if: matrix.os == 'windows-latest'
+        shell: cmd
+        run: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat" -arch=x64
+      - name: (Windows) Setting Visual Studio build environment variables and paths
+        if: matrix.os == 'windows-latest'
+        uses: seanmiddleditch/gha-setup-vsdevenv@v1
       - name: (Windows) Run CMake
         if: matrix.os == 'windows-latest'
         working-directory: aseprite/build
