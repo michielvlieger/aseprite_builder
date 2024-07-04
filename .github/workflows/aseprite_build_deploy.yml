@@ -68,6 +68,8 @@ jobs:
         os: [windows-latest]
       fail-fast: false
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
       - name: (Windows) Install dependencies
         if: matrix.os == 'windows-latest'
         uses: seanmiddleditch/gha-setup-ninja@master
@@ -88,10 +90,17 @@ jobs:
         run: |
           curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-Windows-Release-x86.zip
           unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
-      # - name: Download depot
-      #   run: |
-      #     curl -o Skia-${{ runner.os }}-Release-X64.zip -L https://github.com/aseprite/skia/releases/download/m102-861e4743af/Skia-Windows-Release-x86.zip
-      #     unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
+      - name: Download depot
+        run: |
+          curl -o depot_tools.zip -L https://storage.googleapis.com/chrome-infra/depot_tools.zip
+          unzip depot_tools.zip -d depot_tools
+          set PATH=depot_tools;%PATH%
+          cd depot_tools
+          gclient sync
+          cd ../
+          cd skia
+          set GIT_EXECUTABLE=git.bat
+          python tools/git-sync-deps
       - name: Download Aseprite release
         run: |
           curl -o Aseprite-source.zip -L ${{ needs.check-version.outputs.download_url }}
@@ -106,8 +115,6 @@ jobs:
       - name: (Windows) Setting Visual Studio build environment variables and paths
         if: matrix.os == 'windows-latest'
         uses: seanmiddleditch/gha-setup-vsdevenv@v1
-      - name: Install Depot Tools
-        uses: newkdev/setup-depot-tools@v1.0.1
       - name: run something
         run: gn gen out/Release-x64 --args="is_debug=false is_official_build=true skia_use_system_expat=false skia_use_system_icu=false skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_libwebp=false skia_use_system_zlib=false skia_use_sfntly=false skia_use_freetype=true skia_use_harfbuzz=true skia_pdf_subset_harfbuzz=true skia_use_system_freetype2=false skia_use_system_harfbuzz=false target_cpu=""x64"" win_vc=""C:\Program Files\Microsoft Visual Studio\2022\Community\VC"" extra_cflags=[""-MT""]"
       - name: (Windows) Run CMake
