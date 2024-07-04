@@ -95,21 +95,21 @@ jobs:
           mkdir -p aseprite/build
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
-      - name: check mvs install location
-        run: |
-          C:
-          cd ../../../../../../../../
-          dir
-          cd "Program Files (x86)"
-          dir
-          cd "Microsoft Visual Studio"
-          dir
-          cd Shared
-          dir
-          cd Enterprise
-          cd Common7
-          cd Tools
-          dir
+      # - name: check mvs install location
+      #   run: |
+      #     C:
+      #     cd ../../../../../../../../
+      #     dir
+      #     cd "Program Files (x86)"
+      #     dir
+      #     cd "Microsoft Visual Studio"
+      #     dir
+      #     cd Shared
+      #     dir
+      #     cd Enterprise
+      #     cd Common7
+      #     cd Tools
+      #     dir
       - name: (Windows) Set architecture for the produced binary
         if: matrix.os == 'windows-latest'
         shell: cmd
