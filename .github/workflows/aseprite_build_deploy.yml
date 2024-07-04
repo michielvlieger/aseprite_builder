@@ -92,10 +92,10 @@ jobs:
           unzip Skia-${{ runner.os }}-Release-X64.zip -d skia
       - name: Download depot
         run: |
+          cd
           curl -o depot_tools.zip -L https://storage.googleapis.com/chrome-infra/depot_tools.zip
           unzip depot_tools.zip -d depot_tools
-          cd
-          set PATH=%PATH%;D:\depot_tools
+          set PATH=%PATH%;%cd%\depot_tools
           cd depot_tools
           gclient sync
           cd ../
