@@ -95,9 +95,7 @@ jobs:
           curl -o depot_tools.zip -L https://storage.googleapis.com/chrome-infra/depot_tools.zip
           unzip depot_tools.zip -d depot_tools
           # set PATH=%PATH%;%cd%\depot_tools
-          cd depot_tools
-          gclient sync
-          cd ../
+          depot_tools/gclient sync
           cd skia
           set GIT_EXECUTABLE=git.bat
           python tools/git-sync-deps
