@@ -104,7 +104,7 @@ jobs:
           dir
           cd "Microsoft Visual Studio"
           dir
-          cd 2019
+          cd Shared
           dir
           cd Enterprise
           cd Common7
